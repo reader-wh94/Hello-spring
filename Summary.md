@@ -59,4 +59,45 @@
    * 조건: 아직 데이터 저장소가 선정되지 않음(가상의 시나리오)
      * 데이터 저장소가 선정되지 않아서, 우선 인터페이스로 구현 클래스를 변경할 수 있도록 설계
      * 개발을 진행하기 위해서 초기 개발 단계에서는 구현체로 가벼운 메모리 기반의 데이터 저장소 사용
-2. 회원 도메인과 리포지토리 만들기
+   
+2. 회원 서비스 테스트
+
+   * MemberSerivce에 있는 MemberRepository는 new 해서 다른 객체
+
+   * test에서 하는 new MemoryMemberRepository()는 위와 다른 객체
+
+     * 굳이 두 개를 쓸 필요가 없다
+     * MemoryMemberRepository에서 static으로 쓰고 있는데, static을 지우면 에러가 발생할 것
+
+   * MemberSerivce에서 사용하고 있는 new MemoryMemberRepository()와 Testcase에서 만든 new MemoryMemberRepository()가 서로 다른 리퍼지토리(다른 인스턴스)이다.
+
+     * 같은 걸로 테스트하는 것이 맞음
+     * 현재 다른 리퍼지토리 이용 중
+
+   * ```java
+     private final MemberRepository memberRepository = new MemoryMemberRepository();
+     
+     // 에서
+     
+     private final MemberRepository memberRepository;
+     
+         public MemberService(MemoryMemberRepository memberRepository) {
+             this.memberRepository = memberRepository;
+         }
+         
+     // 로 변경
+     ```
+
+   * MemberService 관점에서 자신이 직접 new를 하는 것이 아니라 MemberRepository를 외부에서 넣어준다. 
+
+     * 이를 DI라고 함
+
+
+
+### 4. 스프링 빈과 의존관계
+
+1. 컴포넌트 스캔과 자동 의존관계 설정
+   * ```@Component``` ```@Controller``` 등등..
+   * 스프링은 스프링 컨테이너에 스프링 빈을 등록할 때, 기본으로 싱글톤으로 등록한다.
+2. 자바 코드로 직접 스프링 빈 등록하기
+   * SpringConfig 파일 만들어서 ```@Bean``` 사용
