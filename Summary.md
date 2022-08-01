@@ -108,4 +108,24 @@
 
 1. 회원 웹 기능 - 등록
    * URL 입력하는 방식은 GetMapping, 전달 할 때 Get 사용
-   * Post 방식은 (@PostMapping) 보통 데이터를 폼에 넣어서 전달할 때 사용
+   * Post 방식은 (```@PostMapping```) 보통 데이터를 폼에 넣어서 전달할 때 사용
+
+
+
+### 6. 스프링 DB 접근 기술
+
+1. 순수 JDBC
+   * JDBC는 20년 전 쯤에 쓰던 방법 최근에는 잘 쓰지 않는다.
+2. 스프링 통합 테스트
+   * 테스트는 반복할 수 있어야 한다.
+   * DB는 트랜잭션이라는 것이 있어서 COMMIT을 하기 전까지는 DB에 반영이 되지 않는다.
+   * ```@Transactional``` 애노테이션을 테스트 케이스에 달면 테스트를 실행할 때 트랜잭션을 먼저 실행하고 다음에 DB에 insert query하고 다 넣은 다음에 ROLLBACK을 해준다.
+     * DB에 넣었던 데이터가 저장이 안되고 깔끔하게 지워진다.
+3. 스프링 JdbcTemplate
+   * 생성자가 딱 하나 있으면 빈으로 등록될 때 ```@Autowired``` 생략 가능하다.
+4. JPA
+   * JPA를 사용하면, SQL과 데이터 중심의 설계에서 객체 중심의 설계로 패러다임을 전환할 수 있다.
+   * JPA는 인터페이스이고 구현은 Hibernate로 사용한다. (구현체는 더 다양함)
+   * ORM(Object Relationship Mapping) >> Member에 ```@Entity``` 사용 (jpa가 관리하는 객체)
+   * JPA를 쓸려면 EntityManager를 주입받아야 한다.
+   * JPA를 사용할려면 항상 서비스에 ```@Transactional```이 있어야 함
