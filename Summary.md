@@ -129,3 +129,18 @@
    * ORM(Object Relationship Mapping) >> Member에 ```@Entity``` 사용 (jpa가 관리하는 객체)
    * JPA를 쓸려면 EntityManager를 주입받아야 한다.
    * JPA를 사용할려면 항상 서비스에 ```@Transactional```이 있어야 함
+
+
+
+### 7. AOP
+
+1. AOP가 필요한 상황
+
+   * 전체 메소드에 시간을 재는 기능을 추가해야 한다면?
+
+   * 공통 관심 사항(cross-cutting concern) vs 핵심 관심 사항(core concern)으로 나눌 수 있다.
+
+2. AOP 적용
+
+   * aop 적용 시 ```@Aspect``` 사용
+   * aop를 bean으로 등록해야한다 -> ```@Component``` 사용
